@@ -7,22 +7,32 @@ import {
   ScrollView,
   Image,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Entypo } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+
 const Home = () => {
-  // const [isGoing, setIsGoing] = useState(false);
-  // const [isInterested, setIsInterested] = useState(false);
+  const [isGoingIdx, setIsGoingIdx] = useState([]);
+  const [isInterestedIdx, setIsInterestedIdx] = useState([]);
 
   const handlegoing = (id) => {
-    HomeItems[id].isGoing = !HomeItems[id].isGoing;
-    console.log(HomeItems[id].isGoing);
-    // console.log(id, item);
+    let arrgoing = isGoingIdx;
+    if (!arrgoing.includes(id)) {
+      arrgoing.push(id);
+    } else {
+      arrgoing.splice(arrgoing.indexOf(id), 1);
+    }
+    setIsGoingIdx([...arrgoing]);
   };
-  const handleinterest = (item, id) => {
-    // HomeItems[id].isInterested = !HomeItems[id].isInterested;
-    // console.log(id, item);
+  const handleinterest = (id) => {
+    let arrinterest = isInterestedIdx;
+    if (!arrinterest.includes(id)) {
+      arrinterest.push(id);
+    } else {
+      arrinterest.splice(arrinterest.indexOf(id), 1);
+    }
+    setIsInterestedIdx([...arrinterest]);
   };
 
   let HomeItems = [
@@ -38,8 +48,6 @@ const Home = () => {
       arrival: "00:00",
       departure: "23:59",
       timezone: "UTC-05",
-      isGoing: false,
-      isInterested: false,
     },
     {
       id: 2,
@@ -53,8 +61,6 @@ const Home = () => {
       arrival: "00:00",
       departure: "23:59",
       timezone: "UTC-05",
-      isGoing: false,
-      isInterested: false,
     },
     {
       id: 3,
@@ -68,8 +74,6 @@ const Home = () => {
       arrival: "00:00",
       departure: "23:59",
       timezone: "UTC-05",
-      isGoing: false,
-      isInterested: false,
     },
     {
       id: 4,
@@ -83,8 +87,6 @@ const Home = () => {
       arrival: "00:00",
       departure: "23:59",
       timezone: "UTC-05",
-      isGoing: false,
-      isInterested: false,
     },
     {
       id: 5,
@@ -98,8 +100,6 @@ const Home = () => {
       arrival: "00:00",
       departure: "23:59",
       timezone: "UTC-05",
-      isGoing: false,
-      isInterested: false,
     },
     {
       id: 6,
@@ -113,8 +113,6 @@ const Home = () => {
       arrival: "00:00",
       departure: "23:59",
       timezone: "UTC-05",
-      isGoing: false,
-      isInterested: false,
     },
     {
       id: 7,
@@ -128,8 +126,6 @@ const Home = () => {
       arrival: "00:00",
       departure: "23:59",
       timezone: "UTC-05",
-      isGoing: false,
-      isInterested: false,
     },
     {
       id: 8,
@@ -143,8 +139,6 @@ const Home = () => {
       arrival: "00:00",
       departure: "23:59",
       timezone: "UTC-05",
-      isGoing: false,
-      isInterested: false,
     },
   ];
 
@@ -201,7 +195,7 @@ const Home = () => {
                 <View style={styles.bottomstyle}>
                   <View style={styles.btmstyl}>
                     <Pressable onPress={() => handlegoing(item.id)}>
-                      {item.isGoing ? (
+                      {isGoingIdx.includes(item.id) ? (
                         <Ionicons
                           name="checkmark-circle-sharp"
                           size={22}
@@ -220,7 +214,7 @@ const Home = () => {
 
                   <View style={styles.btmstyl}>
                     <Pressable onPress={() => handleinterest(item.id)}>
-                      {item.isInterested ? (
+                      {isInterestedIdx.includes(item.id) ? (
                         <AntDesign name="star" size={22} color="purple" />
                       ) : (
                         <AntDesign name="staro" size={22} color="purple" />
